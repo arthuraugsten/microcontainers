@@ -31,24 +31,83 @@ Este trabalho tem o intuito de validar os conhecimentos apresentados na discipli
 
 ## Criando um EC2
 
-a
+Para a execução do laboratório estamos usando um EC2 (Elastic Compute Cloud) oferecido pela AWS. Este é serviço de Virtual Machine que utilizaremos para a instalação e configuração do laboratório.
+
+1. Como primeiro passo, usaremos o campo de busca para encontrar a categoria desejada para iniciar o processo de instalação.
+   ![home](docs/home-ec2-search.png)
+
+2. Após acessar o menu, basta clicar no no botão Launch instance dentro do menu `EC2 Dashbaord`. Com isso, iniciaremos o processo para provisioná-lo.
+   ![launch](docs/ec2-launch-instance.png)
+
+3. Agora iniciaremos o processo de criação, para o processo informaremos os seguintes valores:
+
+   - **Nome**: Como primeiro valor requerido, inforaremos o nome do recurso, para o laboratório usaremos `microcontainers`.
+   - **Image**: Como sistema operacional, escolheremos a imagem base do Ubuntu.
+
+   ![info1](docs/ec2-info-1.png)
+
+   - **Instance type**: Para o instance type, escolheremos o tamanho `t2.large` para termos recursos suficientes para subir todos os serviços requeridos com redundância.
+   - **Key pair**: Este valor deixaremos com o valor padrão preenchido pelo formulário.
+     ![info2](docs/ec2-info-2.png)
+
+   - **Networking**: Para fins didáticos, habilitaremos a conexxão SSh de qualquer endereço IP. Lembrando que esta opção não deve ser usada em ambientes produtivos.
+
+   ![info3](docs/ec2-info-3.png)
+
+   - Após preencher os dados informados nos passos anteriores, informe o número de instâncias como 1 e clique em launch instance para iniciar o processo de provisionamento.
+     ![confirmation](docs/ec2-info-confirmation.png)
+
+4. Após iniciar o processo, você será redirecionado para uma página onde mostrará o progresso de criação da instância de EC2.
+   ![creating](docs/ec2-creating.png)
+
+5. Uma vez concluído, você poderá acessar novamente o menu de EC2 e acessar a opção de Instances. Assim você verá a instância recem criada. Com isso, concluímos o provisionamento do recurso computacional que será usado neste laboratório.
+   ![listingec2](docs/ec2-instances-list.png)
+
+## Conectando no EC2
+
+1. Para configurar o cluster de Kubernetes, primeiro teremos que acessar o recurso através de uma conexão SSH. Para isso, teremos que obter o endereço de IP público criado para o recurso. Ao clicar no registro da listagem mostrando a instância criada, copie o valor do campo `Public IPv4 IP` e armazene-o para a próxima etapa.
+
+   ![pip](docs/ec2-public-ip.png)
+
+2. Abra o terminal e digite o seguinte comando `ssh -i <caminho-arquivo-baixado>.pem ubuntu@<ip-publico-ec2>`. Após executar o comando, a conexão será iniciada.
+   ![ssh](docs/ssh-ec2.png)
 
 ## Instalando GIT
 
-a
+1. Nesta etapa, instalaremos o GIT para baixar os arquivos de deployment do laboratório. Para isso, execute o seguinte comando: `sudo apt-get install git`.
+   ![git](docs/git-install.png)
+
+2. Após a instalação, execute o comando `git clone https://github.com/arthuraugsten/microcontainers.git` para baixar os arquivos do repositório git.
 
 ## Instalando K3S
 
-a
+1. Para a instalação do K3s, utilizaremos o script `install-k3s.sh`. Para executá-lo, basta executar o comando `sudo microcontainers/install-k3s.sh`.
 
 ## Aplicando configurações
 
-a
+1. Para a configuração do wordpress, executaremos o comando de apply oferecido pela API do kubectl configurando-o para buscar todos arquivos YAML do diretório clonado. Para isso, execute o comando `cd microcontainers` para acessar o diretório clonado e então `kubectl apply -f .` para executar todas as configurações.
+
+2. Para acompanhar o provisionamento dos recursos, execute o comando `kubectl get deployment -o wide -w`, uma vez que todos estiverem com o status `ready`, precione `CTRL-C` para cancelar o comando de observação.
+
+Neste processo, nós todos os recursos necessários (service/secret/ingress) para o provisionamento de recurso. Como armazenamento persistente, utilizamos o próprio local storage a fins de simplicidade e também configuramos o website para termos 2 instâncias. Assim, permitindo alta disponibilidade.
 
 ## Configurando acesso HTTP externo
 
-a
+Nesta etapa configuramos o acesso externo, assim, possibilitando acessarmos a aplicação criada através do endereço público.
+
+1. Para isso, acesse as informações da instância de EC2, clique na guia `Security` para acessar as informações de rede. Nesta guia, clique no link do campo Security Groups. Este recurso é responsável por realizar filtragens de comunicações, nele teremos que habilitar nosso IP.
+   ![sg](docs/ec2-security-group.png)
+
+2. Após acessar o security group, você verá a conexão de SSH configurada durante a instalação, para adicionar a regra permitindo conexão HTTP, acessaremos a opção `Edit inbound rules`.
+   ![sginfo](docs/security-group-info.png)
+
+3. Aqui adicionaremos uma nova regra do tipo HTTP, e selecionaremos a opção `My IP` como source. Ele exibirá seu IP público que será configurado na regra, após preencher, clica em `Save rules`.
+   ![sginbound](docs/security-group-inbound.png)
+
+4. Uma vez salvo, você receberá uma indicação de que as configurações foram aplicadas.
+   ![sgconfirmation](docs/security-group-confirmation.png)
 
 ## Testando instalação
 
-a
+1. Para acessar, abra seu browser e acesso o IP público obtido após a criação do EC2. Você será redirecionado para a página de configuração inicial do seu site.
+   ![accessing](docs/acessing-site.png)
