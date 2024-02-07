@@ -74,7 +74,7 @@ Para a execução do laboratório estamos usando um EC2 (Elastic Compute Cloud) 
 
 ## Instalando GIT
 
-1. Nesta etapa, instalaremos o GIT para baixar os arquivos de deployment do laboratório. Para isso, execute o seguinte comando: `sudo apt-get install git`.
+1. Nesta etapa, instalaremos o GIT para baixar os arquivos de deployment do laboratório. Para isso, execute o seguinte comando: `sudo apt-get install git`. _O IP mostrado mostrado na imagem é de uma instalação anterior a executada nos passos anteriores, podendo desconsiderar._
    ![git](docs/git-install.png)
 
 2. Após a instalação, execute o comando `git clone https://github.com/arthuraugsten/microcontainers.git` para baixar os arquivos do repositório git.
