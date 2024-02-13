@@ -1,6 +1,6 @@
 # Trabalho Kubernetes
 
-Este trabalho tem o intuito de validar os conhecimentos apresentados na disciplina de Microcontainers. Nele iremos demonstrar como criar uma estrutura de kubernetes para hospedar um site WordPress com MySQL.
+Este trabalho tem o intuito de validar os conhecimentos apresentados na disciplina de Microcontainers. Nele iremos demonstrar como criar uma estrutura de kubernetes para hospedar um site WordPress com MySQL. Você poderá encontrar este trabalho no repositório do [GitHub](https://github.com/arthuraugsten/microcontainers).
 
 ## Acessando AWS Academy
 
