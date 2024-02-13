@@ -89,13 +89,13 @@ Para a execução do laboratório estamos usando um EC2 (Elastic Compute Cloud) 
 
 2. Para acompanhar o provisionamento dos recursos, execute o comando `kubectl get deployment -o wide -w`, uma vez que todos estiverem com o status `ready`, precione `CTRL-C` para cancelar o comando de observação.
 
-Neste processo, nós todos os recursos necessários (service/secret/ingress) para o provisionamento de recurso. Como armazenamento persistente, utilizamos o próprio local storage a fins de simplicidade e também configuramos o website para termos 2 instâncias. Assim, permitindo alta disponibilidade.
+Neste processo, nós criamos todos os recursos necessários (service/secret/ingress) para o provisionamento. Como armazenamento persistente, utilizamos o próprio local storage a fins de simplicidade e também configuramos o website para termos 2 instâncias. Assim, permitindo alta disponibilidade.
 
 ## Configurando acesso HTTP externo
 
 Nesta etapa configuramos o acesso externo, assim, possibilitando acessarmos a aplicação criada através do endereço público.
 
-1. Para isso, acesse as informações da instância de EC2, clique na guia `Security` para acessar as informações de rede. Nesta guia, clique no link do campo Security Groups. Este recurso é responsável por realizar filtragens de comunicações, nele teremos que habilitar nosso IP.
+1. Para isso, acesse as informações da instância de EC2, selecione a instância em execução e clique na guia `Security` para acessar as informações de rede. Nesta guia, clique no link do campo Security Groups. Este recurso é responsável por realizar filtragens de comunicações, nele teremos que habilitar nosso IP.
    ![sg](docs/ec2-security-group.png)
 
 2. Após acessar o security group, você verá a conexão de SSH configurada durante a instalação, para adicionar a regra permitindo conexão HTTP, acessaremos a opção `Edit inbound rules`.
